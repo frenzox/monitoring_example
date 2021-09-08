@@ -1,0 +1,147 @@
+.output switches.arg1 + "/fsm_$(abbr).h"
+.
+/*
+ * fsm_$(abbr).h
+ *
+ * Brief: $(fsm.name:no) ($(ABBR)) State Machine -- states and events.
+ *
+ */
+
+#ifndef FSM_$(ABBR)_H
+#define FSM_$(ABBR)_H
+
+#include <fsm.h>
+#include "fsm_$(abbr)_handlers.h"
+
+typedef enum {
+    // "Invalid" state, for initalization.
+    $(ABBR)_STATE_NULL,
+
+    // Valid states.
+.for fsm->states
+    $(ABBR)_STATE_$(NAME:c),
+.endfor
+} fsm_$(abbr)_state;
+
+typedef enum {
+    // NULL event - means there are no pending events.
+    $(ABBR)_EVENT_NULL,
+
+    // Actual events to trigger transitions.
+.for fsm->events
+    $(ABBR)_EVENT_$(NAME),
+.endfor
+} fsm_$(abbr)_event;
+
+fsm *fsm_$(abbr)_new(void *user_data);
+
+#endif // FSM_$(ABBR)_H
+.close
+.
+.
+.
+.output switches.arg1 + "/fsm_$(abbr).c"
+.
+/*
+ * fsm_$(abbr).c
+ *
+ * Brief: $(fsm.name:no) ($(ABBR)) State Machine.
+ *
+ */
+
+#include <stdlib.h>
+
+#include <fsm.h>
+#include "fsm_$(abbr).h"
+#include "fsm_$(abbr)_handlers.h"
+
+static const fsm_state
+$(abbr)_tx_table [] = {
+.for states
+.    for state
+    [$(ABBR)_STATE_$(NAME:c)] = {
+        .id = $(ABBR)_STATE_$(NAME:c),
+        .transitions = {
+.       for transition
+            [$(ABBR)_EVENT_$(EVENT)] = $(ABBR)_STATE_$(NEW_STATE),
+.       endfor
+        },
+        .on_entry = $(abbr)_$(name)_on_entry,
+        .on_tick  = $(abbr)_$(name)_on_tick,
+        .on_exit  = $(abbr)_$(name)_on_exit,
+    },
+.    endfor
+.endfor
+};
+
+fsm *fsm_$(abbr)_new(void *user_data)
+{
+.   first_state_id = "$(abbr)_state_$(fsm.first_state)"
+    return fsm_new("", $(abbr)_tx_table,
+                 &$(abbr)_tx_table[$(FIRST_STATE_ID)], user_data);
+}
+
+.close
+.
+.
+.
+.output switches.arg1 + "/fsm_$(abbr)_handlers.h"
+.
+/*
+ * fsm_$(abbr)_handlers.h
+ *
+ * Brief: $(fsm.name:no) ($(ABBR)) State Machine -- action handler prototypes.
+ *
+ */
+
+#ifndef FSM_$(ABBR)_HANDLERS_H_
+#define FSM_$(ABBR)_HANDLERS_H_
+
+#include <stdint.h>
+
+.for fsm->states
+void $(abbr)_$(name)_on_entry(void *data);
+void $(abbr)_$(name)_on_tick(void *data);
+void $(abbr)_$(name)_on_exit(void *data);
+
+.endfor
+
+#endif // FSM_$(ABBR)_HANDLERS_H
+.close
+.
+.
+.
+.output switches.arg1 + "/fsm_$(abbr)_default_handlers.c"
+.
+/*
+ * fsm_$(abbr)_default_handlers.c
+ *
+ * Brief: $(fsm.name:no) ($(ABBR)) State Machine -- default action handlers.
+ *
+ */
+
+#include "fsm_$(abbr)_handlers.h"
+
+#ifndef WEAK
+#define WEAK __attribute__((weak))
+#endif
+
+.for fsm->states
+void WEAK $(abbr)_$(name)_on_entry(void *data)
+{
+    (void)data;
+}
+
+void WEAK $(abbr)_$(name)_on_tick(void *data)
+{
+    (void)data;
+}
+
+void WEAK $(abbr)_$(name)_on_exit(void *data)
+{
+    (void)data;
+}
+
+.endfor
+
+.close

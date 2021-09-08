@@ -1,0 +1,40 @@
+menu "Application"
+
+menu "Temperature Monitoring"
+config TEMPERATURE_MONITORING_MIN_THRESHOLD
+    int "Minimum temperature in which the system can work, given in Celsius"
+    default -15
+    help
+        If the device's internal temperature reaches this value, the system is
+        put into fault state
+
+config TEMPERATURE_MONITORING_MAX_THRESHOLD
+    int "Maximum temperature in which the system can work, given in Celsius"
+    default 70
+    help
+        If the device's internal temperature reaches this value, the system is
+        put into fault state
+
+config TEMPERATURE_MONITORING_INTERVAL
+    int "Interval in which the temperature is checked, given in milliseconds"
+    default 1000
+    help
+        The device's internal temperature is checked regularly and compared
+        against the minimum and maximum configured tresholds. This option gives
+        you the ability to choose what's the interval in which the temperature
+        is checked
+
+config TEMPERATURE_MONITORING_HOLD_OFF_TIME
+    int "Time to wait before going to fault state, given in milliseconds"
+    default 5000
+    help
+        If the device's internal temperature exceeds the configured thresholds,
+        the system goes into fault state. This option sets the amount of time
+        between the moment the critical temperature is detected and the moment
+        the system is put in fault state. The temperature keeps being checked in
+        case the hold off time value is greater then the monitoring interval,
+        which gives a chance for the system temperature to lower before going
+        into fault state
+endmenu
+
+endmenu

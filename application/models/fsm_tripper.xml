@@ -1,0 +1,34 @@
+<?xml version = "1.0" ?>
+<fsm
+  name        = ""
+  abbr        = "tripper"
+  first_state = "nominal"
+
+  descr       = ""
+  >
+
+  <states>
+    <state name = "nominal">
+      <transition event = "input_out_of_range" new_state = "hold" />
+    </state>
+
+    <state name = "hold">
+      <transition event = "input_nominal" new_state = "nominal" />
+      <transition event = "hold_timeout" new_state = "tripped" />
+      <transition event = "reset" new_state = "nominal" />
+    </state>
+
+    <state name = "tripped">
+      <transition event = "reset" new_state = "nominal" />
+    </state>
+
+  </states>
+
+  <events>
+    <event name = "input_nominal" />
+    <event name = "input_out_of_range" />
+    <event name = "hold_timeout" />
+    <event name = "reset" />
+  </events>
+
+</fsm>

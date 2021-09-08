@@ -49,8 +49,6 @@ static uint32_t adc_poll(adc_device *adc, uint32_t channel)
 	return value;
 }
 
-/* Public Functions
- * ---------------------------------------------------------------------------------------------- */
 void adc_init(uint8_t device_id)
 {
 	adc_device *device;
