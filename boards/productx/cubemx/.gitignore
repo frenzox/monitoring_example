@@ -1,0 +1,3 @@
+# Ignore cubemx-generated makefile, because it updates a timestamp with
+# each generation. And we don't use this makefile anyway.
+Makefile
