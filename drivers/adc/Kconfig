@@ -1,0 +1,12 @@
+menu "ADC"
+
+choice
+    prompt "Choose the analog digital converter driver for your target"
+    default STM32_ADC_DRIVER if USE_STM32_DRIVERS
+
+config STM32_ADC_DRIVER
+    bool "ADC driver for STM32 devices"
+
+endchoice
+
+endmenu

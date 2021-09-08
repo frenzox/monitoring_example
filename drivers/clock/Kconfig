@@ -1,0 +1,12 @@
+menu "Clock"
+
+choice
+    prompt "Choose the clock driver for your target"
+    default STM32_CLOCK_DRIVER if USE_STM32_DRIVERS
+
+config STM32_CLOCK_DRIVER
+    bool "Clock driver for STM32 devices"
+
+endchoice
+
+endmenu

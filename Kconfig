@@ -1,0 +1,24 @@
+choice
+    prompt "Choose target architecture"
+
+config CORTEX_M4
+    bool "Cortex-M4"
+
+endchoice
+
+config BOARD_SPECIFIC_HEADER
+    string "Path to board specific header"
+    help
+        The board specific header contains board specific configurations which
+        are used by the codebase
+
+choice
+    prompt "Choose vendor drivers to compile"
+
+config USE_STM32_DRIVERS
+    bool "STM32 Drivers"
+
+endchoice
+
+source "drivers/Kconfig"
+source "application/Kconfig"

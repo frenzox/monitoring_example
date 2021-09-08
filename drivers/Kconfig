@@ -1,0 +1,6 @@
+menu "Drivers"
+
+source "drivers/adc/Kconfig"
+source "drivers/gpio/Kconfig"
+
+endmenu

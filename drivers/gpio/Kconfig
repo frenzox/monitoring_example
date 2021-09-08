@@ -1,0 +1,12 @@
+menu "GPIO"
+
+choice
+    prompt "Choose the GPIO driver for your target"
+    default STM32_GPIO_DRIVER if USE_STM32_DRIVERS
+
+config STM32_GPIO_DRIVER
+    bool "GPIO Driver for STM32 devices"
+
+endchoice
+
+endmenu

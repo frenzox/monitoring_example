@@ -1,0 +1,5 @@
+subdir('adc')
+subdir('clock')
+subdir('gpio')
+subdir('hal_stm32f3xx')
+subdir('ntc')
