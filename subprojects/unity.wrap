@@ -1,0 +1,6 @@
+[wrap-git]
+url=git@github.com:ThrowTheSwitch/Unity.git
+revision=v2.5.2
+
+[provide]
+unity=unity_dep

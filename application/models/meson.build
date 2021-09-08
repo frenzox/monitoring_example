@@ -13,5 +13,5 @@ gen_fsm = generator(gsl,
                                 '@BUILD_DIR@'])
 
 foreach file : models
-    source_files += gen_fsm.process(file)
+    application_generated_files += gen_fsm.process(file)
 endforeach

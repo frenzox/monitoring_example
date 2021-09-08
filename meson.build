@@ -73,11 +73,6 @@ else
                                      [application_files, application_generated_files],
                                      c_args: c_args,
                                      link_args: c_link_args,
-                                     dependencies: [bitflipskip_dep,
-                                                    cassert_dep,
-                                                    cobs_dep,
-                                                    ipmp_dep,
-                                                    version_dep],
                                      include_directories: include_dirs)
 
     application_dep = declare_dependency(link_with: application_lib,
